@@ -3,33 +3,42 @@
 
 using namespace std;
 
-int partition(vector<int>& arr, int low, int high) {
-    int pivot = arr[high];   // pivot
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (arr[j] <= pivot) {
-            i++;
-            swap(arr[i], arr[j]);
-        }
+int crossSum(vector<int>& nums, int l, int m, int r) {
+    int leftSum = INT_MIN, sum = 0;
+    for (int i = m; i >= l; i--) {
+        sum += nums[i];
+        leftSum = max(leftSum, sum);
     }
 
-    swap(arr[i + 1], arr[high]);
-    return i + 1;
-}
-
-void quickSort(vector<int>& arr, int low, int high) {
-    if (low < high) {
-        int p = partition(arr, low, high);
-        quickSort(arr, low, p - 1);
-        quickSort(arr, p + 1, high);
+    int rightSum = INT_MIN;
+    sum = 0;
+    for (int i = m + 1; i <= r; i++) {
+        sum += nums[i];
+        rightSum = max(rightSum, sum);
     }
-}
-int maxsum(vector<int>& nums){
-    
+
+    return leftSum + rightSum;
 }
 
-int main() {
-    vector<int> arr = {4, 2, 6, 9, 2};
+int helper(vector<int>& nums, int l, int r) {
+    if (l == r) return nums[l];
+
+    int m = l + (r - l) / 2;
+
+    int left = helper(nums, l, m);
+    int right = helper(nums, m + 1, r);
+    int cross = crossSum(nums, l, m, r);
+
+    return max({left, right, cross});
 }
 
+int maxSubArray(vector<int>& nums) {
+    return helper(nums, 0, nums.size() - 1);
+}
+
+
+int main(){
+    vector<int> nums = {-2, -5, 6, -2, -3, 1, 5, -6};
+    int ans = maxSubArray(nums);
+    cout<<ans;
+}
