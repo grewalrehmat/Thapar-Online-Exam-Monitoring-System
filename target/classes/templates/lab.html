@@ -5,7 +5,10 @@
 <title th:text="${lab.title}">JavaLab</title>
 <link rel="stylesheet" href="/css/app.css">
 </head>
-<body th:attr="data-lab-id=${lab.id},data-secure=${lab.secureMode}">
+<body th:attr="
+    data-lab-id=${lab.id},
+    data-secure=${lab.secureMode},
+    data-integrity-flags=${integrityFlags != null ? integrityFlags : 0}">
 <nav><strong>JavaLab</strong><span th:text="${user.name}"></span><a href="/dashboard">Dashboard</a></nav>
 <main>
 <div class="lab-header">
@@ -18,6 +21,50 @@
 
 <div th:if="${lab.secureMode}" class="secure-banner">
     SECURE MODE ENABLED · integrity events are recorded
+</div>
+
+<div th:if="${lab.secureMode}"
+     class="evaluation-warning"
+     id="evaluationWarning">
+
+    <strong>Evaluation Mode</strong>
+
+    <p>
+        This is a secure evaluation.
+        Stay in fullscreen and do not switch tabs.
+        Integrity violations are recorded.
+    </p>
+
+    <div class="flag-counter" id="flagCounter">
+        Flags: 0/3
+    </div>
+
+    <button
+        class="button primary"
+        id="fullscreenBtn"
+        type="button">
+
+        Enter Fullscreen & Start
+
+    </button>
+
+</div>
+
+<div
+    id="flagMessage"
+    class="flag-message"
+    hidden>
+</div>
+
+
+<div class="question-card card">
+
+    <h2>Question</h2>
+
+    <p th:text="${lab.description}">
+        Write your solution according to the question.
+    </p>
+
 </div>
 
 <div class="editor-layout">

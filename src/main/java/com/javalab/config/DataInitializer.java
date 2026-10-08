@@ -171,31 +171,107 @@ public class DataInitializer {
             // DEMO LAB
             // =================================================
 
-            if (labs.count() == 0) {
+            // =================================================
+            // LAB SESSIONS
+            // =================================================
+
+            var existingLabs = labs.findAll();
+
+            if (existingLabs.stream()
+                    .noneMatch(l -> l.getTitle().equals("Lab 1"))) {
+
+                LocalDateTime now = LocalDateTime.now();
 
                 labs.save(new LabSession(
-
-                        "Java OOP Evaluation",
-
-                        "Write a Java program demonstrating " +
-                        "inheritance and method overriding.",
-
-                        LocalDateTime.now()
-                                .minusMinutes(10),
-
-                        LocalDateTime.now()
-                                .plusHours(3),
-
+                        "Lab 1",
+                        "Week 1 - Java OOP Basics\n\n"
+                                + "Question:\n"
+                                + "Write a Java program using a superclass and "
+                                + "subclass. Demonstrate inheritance and "
+                                + "method overriding.",
+                        now.minusDays(3),
+                        now.plusDays(4),
                         LabStatus.ACTIVE,
+                        false
+                ));
 
+                System.out.println("Created Lab 1");
+            }
+
+            if (existingLabs.stream()
+                    .noneMatch(l -> l.getTitle().equals("Lab 2"))) {
+
+                LocalDateTime now = LocalDateTime.now();
+
+                labs.save(new LabSession(
+                        "Lab 2",
+                        "Week 2 - Polymorphism\n\n"
+                                + "Question:\n"
+                                + "Write a Java program demonstrating runtime "
+                                + "polymorphism using a superclass reference "
+                                + "pointing to objects of at least two subclasses.",
+                        now.plusDays(4),
+                        now.plusDays(11),
+                        LabStatus.ACTIVE,
+                        false
+                ));
+
+                System.out.println("Created Lab 2");
+            }
+
+            if (existingLabs.stream()
+                    .noneMatch(l -> l.getTitle().equals("Lab 3"))) {
+
+                LocalDateTime now = LocalDateTime.now();
+
+                labs.save(new LabSession(
+                        "Lab 3",
+                        "Week 3 - Abstract Classes & Interfaces\n\n"
+                                + "Question:\n"
+                                + "Create an abstract class and an interface, "
+                                + "then implement them in a concrete Java class.",
+                        now.plusDays(11),
+                        now.plusDays(18),
+                        LabStatus.ACTIVE,
+                        false
+                ));
+
+                System.out.println("Created Lab 3");
+            }
+
+            if (existingLabs.stream()
+                    .noneMatch(l -> l.getTitle().equals("Evaluation"))) {
+
+                LocalDateTime now = LocalDateTime.now();
+
+                labs.save(new LabSession(
+                        "Evaluation",
+                        "Java OOP Evaluation\n\n"
+                                + "Question:\n"
+                                + "Write a Java program demonstrating "
+                                + "inheritance, method overriding, and "
+                                + "runtime polymorphism.",
+                        now.plusDays(18),
+                        now.plusDays(18).plusHours(2),
+                        LabStatus.ACTIVE,
                         true
                 ));
 
-                System.out.println(
-                        "Created demo lab"
-                );
+                System.out.println("Created Evaluation");
             }
 
+            // Normalize descriptions for labs already present in the database.
+            labs.findAll().forEach(lab -> {
+                if (lab.getDescription() != null &&
+                        lab.getDescription().contains("\\n")) {
+
+                    lab.setDescription(
+                            lab.getDescription().replace("\\\\n", "\\n")
+                    );
+
+                    labs.save(lab);
+                }
+            });
 
             System.out.println(
                     "JavaLab demo data initialization complete."

@@ -153,6 +153,8 @@ public class TeacherController {
         submissions.save(submission);
 
         return "redirect:/teacher/lab/" +
-                submission.getLab().getId();
+                submission.getLab().getId() +
+                "/student/" +
+                submission.getStudent().getId();
     }
 }
