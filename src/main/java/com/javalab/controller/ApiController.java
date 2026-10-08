@@ -50,6 +50,12 @@ public class ApiController {
 
         s.setSourceCode(body.getOrDefault("code", ""));
         s.setLastSavedAt(LocalDateTime.now());
+
+        // Never downgrade an already submitted submission back to DRAFT.
+        if (s.getStatus() != SubmissionStatus.SUBMITTED) {
+            s.setStatus(SubmissionStatus.DRAFT);
+        }
+
         submissions.save(s);
 
         activities.save(new ActivityEvent(user, lab, ActivityType.DRAFT_SAVE, null));
@@ -90,12 +96,26 @@ public class ApiController {
 
         String code = body.getOrDefault("code", "");
         s.setSourceCode(code);
+
+        boolean wasSubmitted =
+                s.getStatus() == SubmissionStatus.SUBMITTED;
+
+        // Temporarily mark as RUNNING while execution happens.
         s.setStatus(SubmissionStatus.RUNNING);
         submissions.save(s);
 
         var result = runner.run(code);
 
-        s.setStatus(result.exitCode() == 0 ? SubmissionStatus.DRAFT : SubmissionStatus.FAILED);
+        // Never downgrade a submitted submission.
+        if (wasSubmitted) {
+            s.setStatus(SubmissionStatus.SUBMITTED);
+        } else {
+            s.setStatus(
+                    result.exitCode() == 0
+                            ? SubmissionStatus.DRAFT
+                            : SubmissionStatus.FAILED
+            );
+        }
         s.setOutput(result.stdout());
         s.setErrorOutput(result.stderr());
         s.setExitCode(result.exitCode());

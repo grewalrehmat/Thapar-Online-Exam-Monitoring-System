@@ -10,3 +10,18 @@ update submissions set error_output=?,execution_time_ms=?,exit_code=?,feedback=?
 2026-10-08 11:57:51.431645+05:30 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_OUTPUT CHARACTER VARYING(255)": "U&'/var/folders/_q/f132064s5cv7gl_pw0pmvdtr0000gn/T/javalab-run-7240490856220812... (2834)"; SQL statement:
 update submissions set error_output=?,execution_time_ms=?,exit_code=?,feedback=?,lab_id=?,last_saved_at=?,output=?,score=?,source_code=?,status=?,student_id=?,submitted_at=? where id=? [22001-232]
+2026-10-08 13:08:40.708752+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_OUTPUT CHARACTER VARYING(255)": "U&'/var/folders/_q/f132064s5cv7gl_pw0pmvdtr0000gn/T/javalab-run-6954155532196737... (2704)"; SQL statement:
+update submissions set error_output=?,execution_time_ms=?,exit_code=?,feedback=?,lab_id=?,last_saved_at=?,output=?,score=?,source_code=?,status=?,student_id=?,submitted_at=? where id=? [22001-232]
+2026-10-08 13:08:47.101558+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_OUTPUT CHARACTER VARYING(255)": "U&'/var/folders/_q/f132064s5cv7gl_pw0pmvdtr0000gn/T/javalab-run-8716912410455870... (2704)"; SQL statement:
+update submissions set error_output=?,execution_time_ms=?,exit_code=?,feedback=?,lab_id=?,last_saved_at=?,output=?,score=?,source_code=?,status=?,student_id=?,submitted_at=? where id=? [22001-232]
+2026-10-08 13:14:53.997748+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_OUTPUT CHARACTER VARYING(255)": "U&'/var/folders/_q/f132064s5cv7gl_pw0pmvdtr0000gn/T/javalab-run-1980920454868497... (2704)"; SQL statement:
+update submissions set error_output=?,execution_time_ms=?,exit_code=?,feedback=?,lab_id=?,last_saved_at=?,output=?,score=?,source_code=?,status=?,student_id=?,submitted_at=? where id=? [22001-232]
+2026-10-08 13:16:17.738832+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_OUTPUT CHARACTER VARYING(255)": "U&'/var/folders/_q/f132064s5cv7gl_pw0pmvdtr0000gn/T/javalab-run-1110029452361511... (2712)"; SQL statement:
+update submissions set error_output=?,execution_time_ms=?,exit_code=?,feedback=?,lab_id=?,last_saved_at=?,output=?,score=?,source_code=?,status=?,student_id=?,submitted_at=? where id=? [22001-232]
+2026-10-08 13:40:45.315659+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ERROR_OUTPUT CHARACTER VARYING(255)": "U&'/var/folders/_q/f132064s5cv7gl_pw0pmvdtr0000gn/T/javalab-run-1305035684628572... (2712)"; SQL statement:
+update submissions set error_output=?,execution_time_ms=?,exit_code=?,feedback=?,lab_id=?,last_saved_at=?,output=?,score=?,source_code=?,status=?,student_id=?,submitted_at=? where id=? [22001-232]

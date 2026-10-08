@@ -114,3 +114,8 @@ table td {
 .nav-logout:hover {
     color: white;
 }
+
+
+.lab-description {
+    white-space: pre-line;
+}
