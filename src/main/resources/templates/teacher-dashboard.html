@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teacher Dashboard</title>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<nav><strong>JavaLab</strong><span th:text="${user.name}"></span><a href="/logout">Logout</a></nav>
+<main>
+<h1>Teacher Dashboard</h1>
+<p class="muted">Monitor active laboratory sessions and evaluate submissions.</p>
+<div class="grid">
+<div class="card" th:each="lab : ${labs}">
+    <span class="pill" th:text="${lab.status}"></span>
+    <h2 th:text="${lab.title}"></h2>
+    <p th:text="${lab.description}"></p>
+    <a class="button" th:href="@{/teacher/lab/{id}(id=${lab.id})}">Open Monitor</a>
+</div>
+</div>
+</main>
+</body>
+</html>

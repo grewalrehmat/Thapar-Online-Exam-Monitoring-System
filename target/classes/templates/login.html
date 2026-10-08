@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JavaLab — Login</title>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="center">
+<div class="card auth">
+    <h1>JavaLab</h1>
+    <p class="muted">Java laboratory evaluation platform</p>
+    <div th:if="${param.error}" class="alert">Invalid credentials.</div>
+    <div th:if="${param.logout}" class="success">Logged out.</div>
+    <form method="post" action="/login">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <label>Email</label>
+        <input name="username" type="email" required placeholder="student@javalab.local">
+        <label>Password</label>
+        <input name="password" type="password" required placeholder="••••••••">
+        <button class="primary" type="submit">Sign in</button>
+    </form>
+    <hr>
+    <small>
+        Demo student: student@javalab.local / student123<br>
+        Demo teacher: teacher@javalab.local / teacher123
+    </small>
+</div>
+</body>
+</html>

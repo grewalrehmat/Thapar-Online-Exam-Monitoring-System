@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+Student Monitor — JavaLab
+</title>
+
+<link rel="stylesheet"
+      href="/css/app.css">
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+<strong>
+JavaLab
+</strong>
+
+<span>
+Student Monitor
+</span>
+
+
+<a th:href="@{/teacher/lab/{id}(id=${lab.id})}">
+Back to Students
+</a>
+
+
+<form method="post"
+      action="/logout"
+      style="display:inline;">
+
+<input type="hidden"
+       th:name="${_csrf.parameterName}"
+       th:value="${_csrf.token}">
+
+
+<button type="submit"
+        class="nav-logout">
+
+Logout
+
+</button>
+
+</form>
+
+</nav>
+
+
+<main>
+
+
+<!-- ======================================================
+     STUDENT INFORMATION
+======================================================= -->
+
+<div class="card">
+
+<h1 th:text="${student.name}">
+User 1
+</h1>
+
+
+<p>
+
+Roll Number:
+
+<strong
+    th:text="${student.rollNumber}">
+23BCS001
+</strong>
+
+</p>
+
+
+<div th:if="${submission != null}">
+
+<p>
+
+Status:
+
+<span class="pill present"
+      th:text="${submission.status}">
+SUBMITTED
+</span>
+
+</p>
+
+
+<p>
+
+Score:
+
+<strong
+    th:text="${submission.score != null
+              ? submission.score + '%'
+              : 'Not graded'}">
+
+Not graded
+
+</strong>
+
+</p>
+
+</div>
+
+
+<div th:if="${submission == null}">
+
+<p>
+
+Status:
+
+<span class="pill absent">
+ABSENT
+</span>
+
+</p>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     ACTIVITY
+======================================================= -->
+
+<div class="card">
+
+<h2>
+Activity
+</h2>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Event
+</th>
+
+<th>
+Time
+</th>
+
+<th>
+Metadata
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+<tr th:each="a : ${activities}">
+
+<td th:text="${a.type}">
+RUN
+</td>
+
+
+<td
+    th:text="${#temporals.format(
+              a.timestamp,
+              'HH:mm:ss')}">
+
+12:00:00
+
+</td>
+
+
+<td
+    th:text="${a.metadata != null
+              ? a.metadata
+              : '—'}">
+
+—
+
+</td>
+
+</tr>
+
+
+<tr th:if="${#lists.isEmpty(activities)}">
+
+<td colspan="3">
+
+No activity recorded.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- ======================================================
+     CURRENT CODE
+======================================================= -->
+
+<div class="card">
+
+<h2>
+Current Code
+</h2>
+
+
+<pre class="code-view"
+     th:text="${submission != null
+               ? submission.sourceCode
+               : 'No submission yet.'}">
+</pre>
+
+</div>
+
+
+<!-- ======================================================
+     EXECUTION
+======================================================= -->
+
+<div class="card"
+     th:if="${submission != null}">
+
+<h2>
+Last Execution
+</h2>
+
+
+<h3>
+Output
+</h3>
+
+
+<pre class="code-view"
+     th:text="${submission.output != null
+               ? submission.output
+               : '(no output)'}">
+</pre>
+
+
+<h3>
+Error
+</h3>
+
+
+<pre class="code-view"
+     th:text="${submission.errorOutput != null
+               ? submission.errorOutput
+               : '(no errors)'}">
+</pre>
+
+</div>
+
+
+</main>
+
+</body>
+
+</html>

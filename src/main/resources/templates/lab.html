@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title th:text="${lab.title}">JavaLab</title>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body th:attr="data-lab-id=${lab.id},data-secure=${lab.secureMode}">
+<nav><strong>JavaLab</strong><span th:text="${user.name}"></span><a href="/dashboard">Dashboard</a></nav>
+<main>
+<div class="lab-header">
+<div>
+<h1 th:text="${lab.title}"></h1>
+<p th:text="${lab.description}"></p>
+</div>
+<div class="timer" id="timer"></div>
+</div>
+
+<div th:if="${lab.secureMode}" class="secure-banner">
+    SECURE MODE ENABLED · integrity events are recorded
+</div>
+
+<div class="editor-layout">
+<section class="card editor-card">
+    <div class="toolbar">
+        <button class="button" id="runBtn">Run</button>
+        <button class="button primary" id="submitBtn">Submit</button>
+        <span id="saveStatus" class="muted">Saved</span>
+    </div>
+    <textarea id="code" spellcheck="false" th:text="${submission != null ? submission.sourceCode : 'public class Main {\n    public static void main(String[] args) {\n        System.out.println(&quot;Hello JavaLab&quot;);\n    }\n}'}"></textarea>
+</section>
+
+<section class="card output">
+    <h3>Execution Output</h3>
+    <pre id="stdout"></pre>
+    <h3>Errors</h3>
+    <pre id="stderr" class="error-text"></pre>
+</section>
+</div>
+</main>
+<script src="/js/lab.js"></script>
+</body>
+</html>
