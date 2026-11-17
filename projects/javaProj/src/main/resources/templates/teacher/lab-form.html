@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Create lab · JavaLab</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body><header class="topbar"><a class="brand" href="/teacher"><span class="brand-mark small">JL</span> JavaLab</a><a class="button quiet" href="/teacher">← Dashboard</a></header>
+<main class="page narrow"><p class="eyebrow">LAB SETUP</p><h1>Create a programming lab</h1><p class="muted intro">Choose a course, assign one or more of your groups, and set the date. You control when the lab opens.</p>
+<div class="notice error" th:if="${error}" th:text="${error}"></div>
+<form class="panel form-panel stack lab-form" method="post" th:action="@{/teacher/labs}" id="lab-form">
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<label>Lab title<input name="title" required maxlength="140" placeholder="Java Fundamentals · Lab 1"></label>
+<label>Course<select name="courseCode" id="lab-course" required><option value="">Select course</option><option th:each="course : ${teacherCourses}" th:value="${course.code}" th:text="${course.code + ' · ' + course.name}"></option></select></label>
+<label>Scheduled date<input type="date" name="scheduledDate" required></label>
+<label>Question and instructions<textarea name="question" rows="9" maxlength="12000" required placeholder="Describe the problem and expected behavior..."></textarea></label>
+<label>Assigned groups<select name="groupNames" id="lab-groups" multiple required size="4"><option th:each="assignment : ${assignments}" th:value="${assignment.group.name}" th:data-course="${assignment.course.code}" th:text="${assignment.course.code + ' · Group ' + assignment.group.name}"></option></select><small>Use Ctrl or Command to select multiple groups.</small></label>
+<div class="toggle-row security-options"><label class="check-label"><input type="checkbox" name="secureMode" value="true" id="secure-mode"> Secure lab session</label><label class="check-label"><input type="checkbox" name="cameraMonitoring" value="true" id="camera-monitoring" disabled> Camera check-ins every 2 minutes</label></div><p class="muted small-copy">Secure labs log tab and full-screen exits. Camera monitoring is available only in secure labs.</p><button class="button primary" type="submit">Create lab</button>
+</form></main><script th:src="@{/js/lab-form.js}" defer></script></body></html>

@@ -1,0 +1,12 @@
+target/
+data/
+*.db
+*.mv.db
+*.trace.db
+.env
+.snapshots/
+yolo-service/.venv/
+yolo-service/__pycache__/
+yolo-service/snapshots/*
+!yolo-service/snapshots/.gitkeep
+.DS_Store

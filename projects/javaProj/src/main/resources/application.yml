@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: javalab
+  datasource:
+    url: ${JAVALAB_DATABASE_URL:jdbc:h2:file:./data/javalab;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE}
+    username: ${JAVALAB_DATABASE_USERNAME:sa}
+    password: ${JAVALAB_DATABASE_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  thymeleaf:
+    cache: ${THYMELEAF_CACHE:false}
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${JAVALAB_SESSION_COOKIE_SECURE:false}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+javalab:
+  demo:
+    enabled: ${JAVALAB_DEMO_ENABLED:false}
+  runner:
+    url: ${JAVALAB_RUNNER_URL:http://localhost:8091}
+    token: ${JAVALAB_RUNNER_TOKEN:local-dev-runner-token}
+  monitoring:
+    url: ${JAVALAB_MONITORING_URL:http://localhost:8092}
+    token: ${JAVALAB_MONITORING_TOKEN:local-dev-monitoring-token}
+    retention-hours: ${JAVALAB_SNAPSHOT_RETENTION_HOURS:2160}
+    cleanup-delay-ms: ${JAVALAB_SNAPSHOT_CLEANUP_DELAY_MS:3600000}

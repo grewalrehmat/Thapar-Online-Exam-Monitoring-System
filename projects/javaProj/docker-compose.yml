@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: javalab
+      POSTGRES_USER: javalab
+      POSTGRES_PASSWORD: ${JAVALAB_POSTGRES_PASSWORD:?Set JAVALAB_POSTGRES_PASSWORD in your environment}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - javalab-postgres:/var/lib/postgresql/data
+  monitoring:
+    profiles: ["monitoring"]
+    build:
+      context: ./monitoring-service
+    restart: unless-stopped
+    environment:
+      JAVALAB_MONITORING_TOKEN: ${JAVALAB_MONITORING_TOKEN:-local-dev-monitoring-token}
+      JAVALAB_YOLO_MODEL: ${JAVALAB_YOLO_MODEL:-yolov8n.pt}
+      JAVALAB_SNAPSHOT_DIR: /service/data/snapshots
+      JAVALAB_SNAPSHOT_RETENTION_HOURS: ${JAVALAB_SNAPSHOT_RETENTION_HOURS:-2160}
+    ports:
+      - "127.0.0.1:8092:8092"
+    volumes:
+      - javalab-monitoring-data:/service/data
+      - ./monitoring-service/models:/service/models:ro
+volumes:
+  javalab-postgres:
+  javalab-monitoring-data:

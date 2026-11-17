@@ -1,0 +1,8 @@
+server:
+  address: ${JAVALAB_RUNNER_BIND:127.0.0.1}
+  port: ${JAVALAB_RUNNER_PORT:8091}
+javalab:
+  runner:
+    token: ${JAVALAB_RUNNER_TOKEN:}
+    image: ${JAVALAB_RUNNER_IMAGE:javalab-java-runner:21}
+    timeout-seconds: ${JAVALAB_RUN_TIMEOUT_SECONDS:5}

@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Edit lab · JavaLab</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body><header class="topbar"><a class="brand" href="/teacher"><span class="brand-mark small">JL</span> JavaLab</a><a class="button quiet" th:href="@{/teacher/labs/{id}(id=${lab.id})}">← Lab details</a></header>
+<main class="page narrow"><p class="eyebrow">EDIT LAB · <span th:text="${lab.course.code}">UCS645</span></p><h1>Edit lab details</h1><div class="notice error" th:if="${error}" th:text="${error}"></div>
+<form class="panel form-panel stack lab-form" method="post" th:action="@{/teacher/labs/{id}/edit(id=${lab.id})}"><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<label>Lab title<input name="title" required maxlength="140" th:value="${lab.title}"></label>
+<label>Scheduled date<input type="date" name="scheduledDate" required th:value="${#temporals.format(lab.scheduledDate,'yyyy-MM-dd')}"></label>
+<label>Question and instructions<textarea name="question" rows="9" maxlength="12000" required th:text="${lab.question}"></textarea></label>
+<label>Assigned groups<select name="groupNames" multiple required size="4"><option th:each="assignment : ${assignments}" th:value="${assignment.group.name}" th:selected="${selectedGroupNames.contains(assignment.group.name)}" th:text="${assignment.course.code + ' · Group ' + assignment.group.name}"></option></select><small>Use Ctrl or Command to select multiple groups.</small></label>
+<button class="button primary" type="submit">Save changes</button></form></main></body></html>
